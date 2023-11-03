@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react'
+import {createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
 import Header from './Header'
 import { checkValidate } from '../utils/validate'
+import { auth } from '../utils/firebase';
 
 const Login = () => {
     const[isSignInForm,setisSignInForm]=useState(true)
@@ -17,6 +19,44 @@ const Login = () => {
        const message= checkValidate(email.current.value,password.current.value)
        console.log(message)
        setErrormessage(message)
+       if(message)return
+       //signin //signup
+       if(!isSignInForm){
+        createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    console.log(user)
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrormessage(errorCode+"-"+errorMessage)
+    // ..
+  });
+
+
+
+       }
+       else{
+        signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user)
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrormessage(errorCode+"-"+errorMessage)
+  });
+
+       }
+
+
+       
 
 
     }
@@ -28,7 +68,7 @@ const Login = () => {
         </div>
         <form  onSubmit={(e)=>e.preventDefault()} className='p-12 bg-black absolute w-3/12 my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80'>
             <h1 className='text-3xl font-bold  p-4'>{isSignInForm?"Sign In":"Sign Up"}</h1>
-            {isSignInForm?"":<input type="text" placeholder='Full Name ' className='p-4 my-2 w-full rounded-lg' ref={name}/>}
+            {isSignInForm?"":<input type="text" placeholder='Full Name ' className='p-4 my-2 w-full rounded-lg bg-gray-500' ref={name}/>}
             <input type="text" placeholder='Email Address ' className='p-4 my-2 w-full rounded-lg bg-gray-500 ' ref={email}/>
         <input type="text" placeholder='Password' className='p-4 my-2 w-full rounded-lg bg-gray-500 ' ref={password} />
             <p className='text-red-500'>{errorMessage}</p>
