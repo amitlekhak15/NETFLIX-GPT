@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
-import {createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
+import {createUserWithEmailAndPassword,signInWithEmailAndPassword ,updateProfile} from "firebase/auth";
 import Header from './Header'
 import { checkValidate } from '../utils/validate'
 import { auth } from '../utils/firebase';
@@ -7,6 +8,7 @@ import { auth } from '../utils/firebase';
 const Login = () => {
     const[isSignInForm,setisSignInForm]=useState(true)
     const[errorMessage,setErrormessage]=useState()
+    const navigate=useNavigate()
     const name=useRef(null)
     const email=useRef(null)
     const password=useRef(null)
@@ -26,7 +28,19 @@ const Login = () => {
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
+    updateProfile(user, {
+      displayName:name.current.value, photoURL: "https://example.com/jane-q-user/profile.jpg"
+    }).then(() => {
+      // Profile updated!
+      navigate("/browse")
+      // ...
+    }).catch((error) => {
+      // An error occurred
+      setErrormessage(error.message)
+      // ...
+    });
     console.log(user)
+    
     // ...
   })
   .catch((error) => {
@@ -45,6 +59,7 @@ const Login = () => {
     // Signed in 
     const user = userCredential.user;
     console.log(user)
+    navigate("/browse")
     // ...
   })
   .catch((error) => {
