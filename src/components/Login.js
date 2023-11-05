@@ -4,6 +4,7 @@ import {createUserWithEmailAndPassword,signInWithEmailAndPassword ,updateProfile
 import Header from './Header'
 import { checkValidate } from '../utils/validate'
 import { auth } from '../utils/firebase';
+import { BACKBROUND } from '../utils/constants';
 
 const Login = () => {
     const[isSignInForm,setisSignInForm]=useState(true)
@@ -32,7 +33,7 @@ const Login = () => {
       displayName:name.current.value, photoURL: "https://example.com/jane-q-user/profile.jpg"
     }).then(() => {
       // Profile updated!
-      navigate("/browse")
+      
       // ...
     }).catch((error) => {
       // An error occurred
@@ -59,7 +60,7 @@ const Login = () => {
     // Signed in 
     const user = userCredential.user;
     console.log(user)
-    navigate("/browse")
+   // navigate("/browse")
     // ...
   })
   .catch((error) => {
@@ -78,7 +79,7 @@ const Login = () => {
   return (
     <div><Header/>
     <div className='absolute'>
-    <img src="https://assets.nflxext.com/ffe/siteui/vlv3/dace47b4-a5cb-4368-80fe-c26f3e77d540/f5b52435-458f-498f-9d1d-ccd4f1af9913/IN-en-20231023-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+    <img src={BACKBROUND}
         alt="logo"></img>
         </div>
         <form  onSubmit={(e)=>e.preventDefault()} className='p-12 bg-black absolute w-3/12 my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80'>
