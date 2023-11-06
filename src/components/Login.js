@@ -20,7 +20,7 @@ const Login = () => {
     const onHandleCLick=()=>{
         //validation
        const message= checkValidate(email.current.value,password.current.value)
-       console.log(message)
+       
        setErrormessage(message)
        if(message)return
        //signin //signup
@@ -40,7 +40,7 @@ const Login = () => {
       setErrormessage(error.message)
       // ...
     });
-    console.log(user)
+    
     
     // ...
   })
@@ -59,7 +59,7 @@ const Login = () => {
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    console.log(user)
+    
    // navigate("/browse")
     // ...
   })
