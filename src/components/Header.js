@@ -9,10 +9,14 @@ import { useDispatch } from 'react-redux'
 import { logo } from '../utils/constants';
 import { USERICON } from '../utils/constants';
 import { toggleGptSearchView } from '../utils/gptSlice';
+import { SUPPORTED_LANGUAGES } from '../utils/constants';
 const Header = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate()
   const user=useSelector((store)=>store.user)
+  const handleLanguageChange=(e)=>{
+    dispatch(store=>store.config.lang(e.target.value))
+  }
   const handleSignout=()=>{
     signOut(auth).then(() => {
       
@@ -55,6 +59,11 @@ const Header = () => {
         <img className='w-44'
          src={logo} alt="logo"></img>
         {user&&(<div className='flex p-2'>
+          <select className='p-2 bg-gray-900 text-white m-2' onChange={handleLanguageChange}>
+            {SUPPORTED_LANGUAGES.map(lang=><option value={lang.identifier} key={lang.identifier}>{lang.name}</option>)}
+            
+            
+          </select>
           <button className='py-2 px-4 m-2 bg-purple-800 text-white rounded-lg mx-4 my-2' onClick={handleGptSearchClick}>GPT Search</button>
        <img className='w-12 h-12' src={USERICON} alt="usericon"/>
        <button onClick={handleSignout}className='font-bold text-white'>Sign Out</button>
