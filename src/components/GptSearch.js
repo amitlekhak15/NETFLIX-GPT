@@ -4,14 +4,19 @@ import GptMovieSuggestions from './GptMovieSuggestions'
 import { BACKBROUND } from '../utils/constants'
 const GptSearch = () => {
   return (
-    <div>
-        <div className='absolute -z-10'>
-    <img src={BACKBROUND}
+    <>
+    <div className='fixed -z-10'>
+    <img className="h-screen object-cover" src={BACKBROUND}
         alt="logo"></img>
         </div>
+        <div className=''>
+        
       <GptSearchBar/>
       <GptMovieSuggestions/>
     </div>
+
+    </>
+    
   )
 }
 
